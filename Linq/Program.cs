@@ -1,4 +1,6 @@
-﻿using Linq.Persistence;
+﻿using Linq.Entities;
+using Linq.Models;
+using Linq.Persistence;
 
 var dbContext = new WorkDbContext();
 
@@ -25,10 +27,22 @@ var salaray10000 = employees.First(e => e.Salary == 10_000m);
 // Lança exceção => var salarayOver20000 = employees.First(e => e.Salary == 20_000m);
 var salarayOver20000 = employees.FirstOrDefault(e => e.Salary == 20_000m);
 
-var salaryOver20000Any = employees.Any(e => e.Salary > 20_000m); // return true or false
+var salaryGreater20000Any = employees.Any(e => e.Salary > 20_000m); // return true or false
 var salaryGreaterOrEqual15000Any = employees.Any(e => e.Salary >= 15_000m);
 
 // Projeção
+var names = employees.Select(e => e.FullName).ToList();
+var employeesViewModel = employees.Select(e => new EmployeeViewModel(e.Id, e.FullName, e.BusinessArea)).ToList();
+
+// Seleciona os elementos dentro de uma lista e agrega uma nova lista // listagem de uma listagem
+var allInvoices = employees.SelectMany(e => e.Invoices).ToList();
+
+//Melhor fazer com selectMany porque o resultado é o mesmo
+//var invoices = new List<Invoice>();
+//foreach (var employee in employees)
+//{
+//    invoices.AddRange(employee.Invoices);
+//}
 
 
 Console.ReadLine();
