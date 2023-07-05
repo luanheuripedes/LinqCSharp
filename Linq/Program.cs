@@ -133,5 +133,14 @@ IEnumerable<Employee> Paginate(int page, int pageSize)
 }
 
 var top3EmployeePaginated = Paginate(1, 3);
+
+// Agregação
+var totalSalaries = employees.Sum(e => e.Salary);
+var avarageSalaries = employees.Average(e => e.Salary);
+var maxSalary = employees.Max(e => e.Salary);
+var minSalary = employees.Min(e => e.Salary);
+
+
+
 Console.ReadLine();
 
