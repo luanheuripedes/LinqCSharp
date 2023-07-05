@@ -54,4 +54,20 @@ var employeesOrderByAreaThenSalary = employees
     .ThenByDescending(e => e.Salary)
     .ToList();
 
+//Agrupamento
+var employeeCountByBusiness = employees
+    .GroupBy(e => e.BusinessArea)
+    .Select(g => new { Department = g.Key, Count = g.Count() })
+    .ToList();
+
+var employeesOver10_000CountByArea = employees
+    .GroupBy(e => e.BusinessArea)
+    .Select(g => new { Department = g.Key, Count = g.Count(e => e.Salary >= 10_000M) })
+    .ToList();
+
+var amountOfInvoices = employees
+    .GroupBy(e => e.Invoices.Count)
+    .Select(g => new { Count = g.Key, Employees = g.Select(e => e.FullName).ToList() })
+    .ToList();
+
 Console.ReadLine();
