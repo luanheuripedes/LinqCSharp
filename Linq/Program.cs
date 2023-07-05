@@ -121,5 +121,17 @@ var leftJoinQuerySyntax =
 var leftJoinQuerySyntaxResult = leftJoinQuerySyntax.ToList();
 
 
+// Partição é o que é usado para(Paginação) Skip and Take take = pegar skip = pular
+var threeEmployees = employees.Take(3).ToList();
+var top5Salaries = employeeOrderByDescendingSalary.Take(5).ToList();
+var allBut5TopSalaries = employeeOrderByDescendingSalary.Skip(5).ToList();
+
+
+IEnumerable<Employee> Paginate(int page, int pageSize)
+{
+    return employees.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+}
+
+var top3EmployeePaginated = Paginate(1, 3);
 Console.ReadLine();
 
