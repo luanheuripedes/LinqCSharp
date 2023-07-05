@@ -45,4 +45,13 @@ var allInvoices = employees.SelectMany(e => e.Invoices).ToList();
 //}
 
 
+// Ordenação
+var employeeOrderBySalary = employees.OrderBy(e => e.Salary).ToList();
+var employeeOrderByDescendingSalary = employees.OrderByDescending(e => e.Salary).ToList();
+
+var employeesOrderByAreaThenSalary = employees
+    .OrderBy(e => e.BusinessArea)
+    .ThenByDescending(e => e.Salary)
+    .ToList();
+
 Console.ReadLine();
