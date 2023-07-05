@@ -70,4 +70,56 @@ var amountOfInvoices = employees
     .Select(g => new { Count = g.Key, Employees = g.Select(e => e.FullName).ToList() })
     .ToList();
 
+
+// Junção(Joins)
+
+//Método
+var innerJoin = employees.Join(allInvoices,
+    employee => employee.Id,
+    invoice => invoice.EmployeeId,
+    (employees, invoice) =>
+    new
+    {
+        Name = employees.FullName,
+        InvoiceAmount = invoice.Amount,
+        InvoiceId = invoice.Id
+    }).ToList();
+
+var innerJoinQuerySyntax =
+    from employee in employees
+    join invoices in allInvoices on employee.Id equals invoices.EmployeeId
+    select new
+    {
+        Name = employee.FullName,
+        InvoiceAmount = invoices.Amount,
+        InvoiceId = invoices.Id
+    };
+
+var innerJoinQuerySyntaxResult = innerJoinQuerySyntax.ToList();
+
+
+// Left Join
+var leftJoint = employees.GroupJoin(allInvoices,
+    employee => employee.Id,
+    invoice => invoice.EmployeeId,
+    (employee, invoices) => new
+    {
+        Name = employee.FullName,
+        Invoices = invoices.ToList()
+    }).ToList();
+
+var leftJoinQuerySyntax =
+    from employee in employees
+    join invoice in allInvoices on employee.Id equals invoice.EmployeeId
+    into tempInvoices
+    select new
+    {
+        Name = employee.FullName,
+        Invoices = tempInvoices
+    };
+
+var leftJoinQuerySyntaxResult = leftJoinQuerySyntax.ToList();
+
+
 Console.ReadLine();
+
