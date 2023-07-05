@@ -140,6 +140,13 @@ var avarageSalaries = employees.Average(e => e.Salary);
 var maxSalary = employees.Max(e => e.Salary);
 var minSalary = employees.Min(e => e.Salary);
 
+//
+//Média por setor
+var avaragePerBusinessArea = employees
+    .GroupBy(e => e.BusinessArea)
+    .Select(g => new { Department = g.Key, Avarage = g.Average(e => e.Salary) })
+    .ToList();
+
 
 
 Console.ReadLine();
